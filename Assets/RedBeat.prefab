@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 8296412173734004150}
   - component: {fileID: 7907074360152406863}
   - component: {fileID: 6092013619200743630}
-  m_Layer: 0
+  - component: {fileID: -4417736005357510551}
+  - component: {fileID: 6241472232373168693}
+  - component: {fileID: -591646539828335809}
+  m_Layer: 7
   m_Name: RedBeat
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +103,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -119,3 +122,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+--- !u!114 &-4417736005357510551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055108929407046757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53203915f8ae4b31bf60dbbb17ddfce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentlySliceable: 1
+  refreshColliders: 1
+  infillers:
+  - material: {fileID: 2100000, guid: 9e0660f55d0e33449a46b74de342ff33, type: 2}
+    regionForInfill:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+  channelNormals: 1
+  channelTangents: 0
+  channelUV2: 0
+  shreddable: 1
+  alternatePrefab: {fileID: 4877259082079842918, guid: b019854c0af8a414293cd8b46f77eb33, type: 3}
+  alwaysCloneFromAlternate: 0
+--- !u!114 &6241472232373168693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055108929407046757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c70982d1a33714fae698031e53b61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-591646539828335809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055108929407046757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f682e572650cd4c47837bdf7f50407ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burstForce: 100

@@ -18,6 +18,7 @@ public class BeatSlicer : MonoBehaviour
     private Vector3 currentBladeCenterPositionWorld;
     private Vector3 bladeMovementDirection = Vector3.zero;
 
+
     // For debugging
     //public Transform debugPointA;
     //public Transform debugPointB;
@@ -55,16 +56,21 @@ public class BeatSlicer : MonoBehaviour
                 Assert.IsTrue(((MeshCollider)other).convex, "Target collider is not convex. Please use only convex colliders on targets");
             }
 
-            Vector3 thirdSlicingPlanePoint = transform.position + bladeMovementDirection;            
-            if (bladeMovementDirection == Vector3.zero)
+            if ((gameObject.layer == LayerMask.NameToLayer("BlueSword") && other.gameObject.layer == LayerMask.NameToLayer("BlueBeat")) ||
+                (gameObject.layer == LayerMask.NameToLayer("RedSword") && other.gameObject.layer == LayerMask.NameToLayer("RedBeat")))
             {
-                // If the blade isn't moving then the third point would be on the line of the other two points and a slicing plane can not be created.
-                // this is very rough, it produces a slice but quite possibly not oriented very well
-                thirdSlicingPlanePoint = other.ClosestPoint(currentBladeCenterPositionWorld);
-            }
-            // Unhandled case: If the movement is perpendicular to the impacted face the slice will fail. (target motion isn't accounted for)
+                Vector3 thirdSlicingPlanePoint = transform.position + bladeMovementDirection;
+                if (bladeMovementDirection == Vector3.zero)
+                {
+                    // If the blade isn't moving then the third point would be on the line of the other two points and a slicing plane can not be created.
+                    // this is very rough, it produces a slice but quite possibly not oriented very well
+                    thirdSlicingPlanePoint = other.ClosestPoint(currentBladeCenterPositionWorld);
+                }
+                // Unhandled case: If the movement is perpendicular to the impacted face the slice will fail. (target motion isn't accounted for)
 
-            SliceTarget(target, transform.position, transform.position + transform.up, thirdSlicingPlanePoint);
+                SliceTarget(target, transform.position, transform.position + transform.up, thirdSlicingPlanePoint);
+
+            }
         }
     }
 

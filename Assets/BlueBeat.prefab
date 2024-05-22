@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 5503561868127728968}
   - component: {fileID: 6739347478025988541}
   - component: {fileID: 6170877210880441065}
-  m_Layer: 0
+  - component: {fileID: 944834722576066558}
+  - component: {fileID: 6950716746191921126}
+  - component: {fileID: -6828501889830835181}
+  m_Layer: 6
   m_Name: BlueBeat
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +103,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -119,3 +122,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+--- !u!114 &944834722576066558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621734378944152834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53203915f8ae4b31bf60dbbb17ddfce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentlySliceable: 1
+  refreshColliders: 1
+  infillers:
+  - material: {fileID: 2100000, guid: 669de2fb0773e864185828c5ac14b66f, type: 2}
+    regionForInfill:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1
+      height: 1
+  channelNormals: 1
+  channelTangents: 0
+  channelUV2: 0
+  shreddable: 1
+  alternatePrefab: {fileID: 4877259082079842918, guid: b019854c0af8a414293cd8b46f77eb33, type: 3}
+  alwaysCloneFromAlternate: 0
+--- !u!114 &6950716746191921126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621734378944152834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c70982d1a33714fae698031e53b61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6828501889830835181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621734378944152834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f682e572650cd4c47837bdf7f50407ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burstForce: 100
