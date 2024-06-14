@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 /// Targets pivots are at their center.
 /// </summary>
 public class BeatSlicer : MonoBehaviour
-{    
+{
     private new Rigidbody rigidbody;
 
     // Center of mass (mid blade if collider properly setup to match blade) is a reasonable approximation of the blades motion for impacts
@@ -18,11 +18,8 @@ public class BeatSlicer : MonoBehaviour
     private Vector3 currentBladeCenterPositionWorld;
     private Vector3 bladeMovementDirection = Vector3.zero;
 
-
-    // For debugging
-    //public Transform debugPointA;
-    //public Transform debugPointB;
-    //public Transform debugPointC;
+    // Angle threshold for determining if slicing is allowed
+    private const float thresholdAngle = 45f;
 
     private void Awake()
     {
@@ -50,7 +47,7 @@ public class BeatSlicer : MonoBehaviour
     {
         BeatTarget target = other.GetComponentInParent<BeatTarget>();
         if (target != null)
-        {            
+        {
             if (other is MeshCollider)
             {
                 Assert.IsTrue(((MeshCollider)other).convex, "Target collider is not convex. Please use only convex colliders on targets");
@@ -59,17 +56,38 @@ public class BeatSlicer : MonoBehaviour
             if ((gameObject.layer == LayerMask.NameToLayer("BlueSword") && other.gameObject.layer == LayerMask.NameToLayer("BlueBeat")) ||
                 (gameObject.layer == LayerMask.NameToLayer("RedSword") && other.gameObject.layer == LayerMask.NameToLayer("RedBeat")))
             {
-                Vector3 thirdSlicingPlanePoint = transform.position + bladeMovementDirection;
-                if (bladeMovementDirection == Vector3.zero)
+                // Get the cube's local Y direction in world space
+                Vector3 cubeUpDirection = target.transform.up;
+
+                // Check if the blade movement direction is against the cube's local Y direction
+                float angle = Vector3.Angle(-cubeUpDirection, bladeMovementDirection);
+                if (angle <= thresholdAngle)
                 {
-                    // If the blade isn't moving then the third point would be on the line of the other two points and a slicing plane can not be created.
-                    // this is very rough, it produces a slice but quite possibly not oriented very well
-                    thirdSlicingPlanePoint = other.ClosestPoint(currentBladeCenterPositionWorld);
+                    Vector3 thirdSlicingPlanePoint = transform.position + bladeMovementDirection;
+                    if (bladeMovementDirection == Vector3.zero)
+                    {
+                        // If the blade isn't moving then the third point would be on the line of the other two points and a slicing plane can not be created.
+                        // this is very rough, it produces a slice but quite possibly not oriented very well
+                        thirdSlicingPlanePoint = other.ClosestPoint(currentBladeCenterPositionWorld);
+                    }
+
+                    // Perform the slice
+                    SliceTarget(target, transform.position, transform.position + transform.up, thirdSlicingPlanePoint);
+
+                    if (ScoreManager.Instance != null)
+                    {
+                        ScoreManager.Instance.AddScore();
+                    }
+                    else
+                    {
+                        Debug.LogError("ScoreManager instance is not set!");
+                    }
+
                 }
-                // Unhandled case: If the movement is perpendicular to the impacted face the slice will fail. (target motion isn't accounted for)
-
-                SliceTarget(target, transform.position, transform.position + transform.up, thirdSlicingPlanePoint);
-
+                else
+                {
+                    Debug.Log("Cube not sliced from the allowed direction!");
+                }
             }
         }
     }
@@ -83,19 +101,8 @@ public class BeatSlicer : MonoBehaviour
     /// <param name="planePointC"></param>
     private void SliceTarget(BeatTarget target, Vector3 planePointA, Vector3 planePointB, Vector3 planePointC)
     {
-        //debugPointA.position = planePointA;
-        //debugPointB.position = planePointB;
-        //debugPointC.position = planePointC;
-
         TurboSlicer turboSlicer = TurboSlicerSingleton.Instance;
         bool destroyOriginal = true;
         TurboSlicerSingleton.Instance.SliceByTriangle(target.gameObject, new Vector3[] { planePointA, planePointB, planePointC }, destroyOriginal);
-
-        // Can also slice by specifying the plane normal and a point on the plane. 
-        // TurboSlicerSingleton.Instance.Slice(GameObject subject, Vector4 planeInLocalSpace, bool destroyOriginal)
-        // Note that the plane needs to be in the local space of the target and in Point-Normal form. This Point-Normal form plane can be created 
-        // using MathHelpers.PointNormalPlane(Vector3 point, Vector3 normal). Remember, make sure your normal and point vectors are in the targets
-        // local space before creating the PointNormalPlane.
     }
-
 }

@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 708a0bc10dd1add4b9efa8670d63c04a
+  - enabled: 1
+    path: Assets/Scenes/Beat Saber Clone.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ScoreBoard.unity
+    guid: 18be25657da329a4f848b854612568ab
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f71d0239216a0ba42813eec966b4565f, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 09c47290f306a194fb7b9d3fc0987c13, type: 2}
